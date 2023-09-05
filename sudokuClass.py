@@ -1,69 +1,69 @@
-def printBoard(board):
-    for row in board:
-        for i, number in enumerate(row):
-            if number == 0:
-                element = "_"
-            else:
-                element = number
-            if i == 8:
-                print(f" {element}")
-            else:
-                print(f" {element}", end="")
+class Sudoku:
+    def __init__(self, board):
+        self.board = [9*[0] for _ in range(9)]
+        for k in range(9):
+            self.board[k] = board[k].copy()
 
+    def printboard(self):
+        for row in self.board:
+            for i, number in enumerate(row):
+                if number == 0:
+                    element = "_"
+                else:
+                    element = number
+                if i == 8:
+                    print(f" {element}")
+                else:
+                    print(f" {element}", end="")
 
-def putNumber(board, address, number):
-    i, j = address
-    board[i][j] = number
+    def putNumber(self, address, number):
+        i, j = address
+        self.board[i][j] = number
 
-
-def existNumberInRow(board, address, number):
-    i, j = address
-    if number in board[i]:
-        return True
-    else:
-        return False
-
-
-def existNumberInColumn(board, address, number):
-    i, j = address
-    column = []
-    for k in range(9):
-        column.append(board[k][j])
-    if number in column:
-        return True
-    else:
-        return False
-
-
-def existNumberInBox(board, address, number):
-    i, j = address
-    box = []
-    for k in range(3):
-        box.extend(board[i-i % 3+k][j-j % 3:j-j % 3+3])
-    if number in box:
-        return True
-    else:
-        return False
-
-
-def canPutNumber(board, address, number):
-    i, j = address
-    if board[i][j] != 0:
-        return False
-    if existNumberInRow(board, (i, j), number):
-        return False
-    if existNumberInColumn(board, (i, j), number):
-        return False
-    if existNumberInBox(board, (i, j), number):
-        return False
-    return True
-
-
-def isBoardFilled(board):
-    for k in range(9):
-        if 0 in board[k]:
+    def existNumberInRow(self, address, number):
+        i, j = address
+        if number in self.board[i]:
+            return True
+        else:
             return False
-    return True
+
+    def existNumberInColumn(self, address, number):
+        i, j = address
+        column = []
+        for k in range(9):
+            column.append(self.board[k][j])
+        if number in column:
+            return True
+        else:
+            return False
+
+    def existNumberInBox(self, address, number):
+        i, j = address
+        box = []
+        for k in range(3):
+            box.extend(self.board[i-i % 3+k][j-j % 3:j-j % 3+3])
+        if number in box:
+            return True
+        else:
+            return False
+
+    def canPutNumber(self, address, number):
+        i, j = address
+        if self.board[i][j] != 0:
+            return False
+        if self.existNumberInRow((i, j), number):
+            return False
+        if self.existNumberInColumn((i, j), number):
+            return False
+        if self.existNumberInBox((i, j), number):
+            return False
+        return True
+
+    def issboardFilled(self):
+        for k in range(9):
+            if 0 in self.board[k]:
+                return False
+        return True
 
 
 if __name__ == "__main__":
@@ -78,5 +78,5 @@ if __name__ == "__main__":
         [0, 2, 0, 4, 8, 0, 0, 0, 0],
         [0, 0, 4, 0, 6, 0, 0, 1, 0]
     ]
-
-    printBoard(board)
+    a = Sudoku(board)
+    a.printboard()
